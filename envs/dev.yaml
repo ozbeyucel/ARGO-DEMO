@@ -2,17 +2,18 @@ replicaCount: 5
 
 ingress:
   enabled: true
-  className: ""
+  className: "nginx"
   annotations:
-    external-link-dev: "https://nginx-dev.projectxconsulting.net/"
-    external-link-qa: "https://nginx-qa.projectxconsulting.net/"
-    external-link-prod: "https://nginx-prod.projectxconsulting.net/"
+   nginx.ingress.kubernetes.io/proxy-body-size: "0"
+      ingress.kubernetes.io/ssl-redirect: "false"
+      cert-manager.io/cluster-issuer: letsencrypt-prod
+      acme.cert-manager.io/http01-edit-in-place: "true"
   hosts:
     - host: nginx-dev.argocd.kadirozbey.net
       paths:
         - path: /
           pathType: ImplementationSpecific
   tls: 
-    - secretName: chart-example-tls
+    - secretName: nginx-dev-tls
       hosts:
-        - chart-example.local
+        - nginx-dev.argocd.kadirozbey.net
