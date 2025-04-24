@@ -5,16 +5,19 @@ metadata:
   namespace: nginx-prod
 spec:
   project: default
+  
   source:
     repoURL: https://github.com/ozbeyucel/ARGO-DEMO.git
     path: application
     targetRevision: HEAD
     helm:
       valueFiles:
-        - ../envs/prod.yaml
+        - ../envs-prod.yaml
+
   destination:
     server: https://kubernetes.default.svc
     namespace: nginx-prod
+ 
   syncPolicy:
     automated: {}
     syncOptions:
