@@ -12,7 +12,7 @@ spec:
     targetRevision: HEAD
     helm:
       valueFiles:
-        - ../nginx/envs/dev.yaml
+        - ../artemis/envs/dev.yaml
 
   destination:
     server: https://kubernetes.default.svc
