@@ -1,24 +1,19 @@
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
-  name: nginx-qa
-  namespace: argocd
-spec:
-  project: default
-  
-  source:
-    repoURL: https://github.com/ozbeyucel/ARGO-DEMO.git
-    path: application
-    targetRevision: HEAD
-    helm:
-      valueFiles:
-        - ../artemis/envs/qa.yaml
+replicaCount: 1
 
-  destination:
-    server: https://kubernetes.default.svc
-    namespace: nginx-qa
- 
-  syncPolicy:
-    automated: {}
-    syncOptions:
-      - CreateNamespace=true
+ingress:
+  enabled: true
+  className: artemis
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-body-size: "0"
+    ingress.kubernetes.io/ssl-redirect: "false"
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    acme.cert-manager.io/http01-edit-in-place: "true"
+  hosts:
+    - host: artemis-qa.argocd.kadirozbey.net
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls:
+    - secretName: artemis-qa-tls
+      hosts:
+        - artemis-qa.argocd.kadirozbey.net
