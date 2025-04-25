@@ -12,7 +12,7 @@ service:
 
 ingress:
   enabled: true
-  className: nginx
+  className: artemis
   annotations:
     nginx.ingress.kubernetes.io/proxy-body-size: "0"
     ingress.kubernetes.io/ssl-redirect: "false"
