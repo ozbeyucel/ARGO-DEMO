@@ -1,0 +1,26 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: artemis-dev
+  namespace: argocd
+spec:
+  project: default
+  
+  source:
+    repoURL: https://github.com/ozbeyucel/ARGO-DEMO.git
+    path: application
+    targetRevision: HEAD
+    helm:
+      valueFiles:
+        - ../envs/dev.yaml
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: artemis-dev
+ 
+  syncPolicy:
+    automated: {}
+    syncOptions:
+      - CreateNamespace=true
+
+        
